@@ -3,6 +3,8 @@ package main.java.server;
 import main.java.session.Session;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -24,7 +26,7 @@ public class Server {
             this.running = true;
             while(this.running) {
                 Socket socket = serverSocket.accept();
-                new Thread(new Session()).start();
+                new Thread(new Session(socket)).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
