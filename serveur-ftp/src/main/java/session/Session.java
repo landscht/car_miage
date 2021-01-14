@@ -57,6 +57,7 @@ public class Session implements Runnable {
         }else {
             disconnect(MessageType.MESSAGE_550);
         }
+        receiveMessage();
     }
 
     private void disconnect(String reason) throws IOException {
