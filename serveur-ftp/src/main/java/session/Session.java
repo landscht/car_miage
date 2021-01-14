@@ -4,7 +4,7 @@ public class Session implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Un client c'est connecté");
+        System.out.println("Un client s'est connecté");
     }
 
 }
