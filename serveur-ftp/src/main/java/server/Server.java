@@ -21,12 +21,12 @@ public class Server {
         System.out.println("Le serveur à démarrer sur le port " + PORT + "...");
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
-            ServerSocket serverSocketSender = new ServerSocket(PORT_SENDER);
+            ServerSocket serverSocketPassif = new ServerSocket(PORT_SENDER);
             System.out.println("Le serveur est prêt");
             this.running = true;
             while(this.running) {
                 Socket socket = serverSocket.accept();
-                new Thread(new Session(socket)).start();
+                new Thread(new Session(socket, serverSocketPassif)).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
