@@ -1,5 +1,7 @@
 package main.java.session;
 
+import main.java.Command.Command;
+import main.java.Command.CommandType;
 import main.java.message.MessageType;
 import main.java.server.Server;
 import main.java.user.UserConstant;
@@ -8,6 +10,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class Session implements Runnable {
 
@@ -21,14 +25,36 @@ public class Session implements Runnable {
      */
     private final OutputStream out;
 
+    public Socket getSocket() {
+        return socket;
+    }
+
     /*
-        Permet de gérer l'état du client
-     */
+            Permet de gérer l'état du client
+         */
     private final Socket socket;
+
+    private String directory = "/";
 
     private final ServerSocket serverSocketPassif;
 
+    public Socket getSocketPassif() {
+        return socketPassif;
+    }
+
+    public void setSocketPassif(Socket socketPassif) {
+        this.socketPassif = socketPassif;
+    }
+
     private Socket socketPassif;
+
+    public boolean isInProcess() {
+        return inProcess;
+    }
+
+    public void setInProcess(boolean inProcess) {
+        this.inProcess = inProcess;
+    }
 
     private boolean inProcess;
 
@@ -43,86 +69,37 @@ public class Session implements Runnable {
     public void run()  {
         System.out.println("Un client s'est connecté");
         try {
-            authentication();
+            sendMessage(MessageType.MESSAGE_220);
+            this.inProcess = true;
             while (this.inProcess) {
                 String message = receiveMessage();
-                interpret(message);
+                interpretCommand(message);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void interpret(String message) throws IOException {
-        if (message.equals("QUIT")) {
-            disconnect(MessageType.MESSAGE_226);
-        }else if(message.contains("STOR")) {
-            putFile(message);
-        }else if(message.contains("EPRT")) {
-            eprtCmd(message);
-        }else{
-            sendMessage(MessageType.MESSAGE_502);
+    public void interpretCommand(String message) throws Exception {
+        if (message != null) {
+            String cmd = message.split(" ")[0];
+            if (CommandType.COMMAND.containsKey(cmd)) {
+                Command command = CommandType.COMMAND.get(cmd);
+                command.run(this, message);
+            }else {
+                sendMessage(MessageType.MESSAGE_502);
+            }
         }
     }
 
-    private void putFile(String message) throws IOException {
-        sendMessage(MessageType.MESSAGE_125);
-
-        InputStream dtpInputStream = this.socketPassif.getInputStream();
-        String[] req = message.split(" ");
-        File file = new File(req[1]);
-
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-
-        byte[] buffer = new byte[socket.getReceiveBufferSize()];
-        int bytesRead = 0;
-
-        while ((bytesRead = dtpInputStream.read(buffer)) != -1) {
-            fileOutputStream.write(buffer, 0, bytesRead);
-        }
-
-        fileOutputStream.close();
-        fileOutputStream.flush();
-        this.socketPassif.close();
-        sendMessage(MessageType.MESSAGE_226);
-    }
-
-    private void authentication() throws IOException {
-        UserConstant userConstant = new UserConstant();
-        sendMessage(MessageType.MESSAGE_220);
-        String message = receiveMessage();
-        String username = message.split(" ")[1];
-        if (userConstant.goodUsername(username)) {
-            sendMessage(MessageType.MESSAGE_331);
-        }else{
-            disconnect(MessageType.MESSAGE_550);
-        }
-        message = receiveMessage();
-        String password = message.split(" ")[1];
-        if (userConstant.goodPassword(password)) {
-            this.inProcess = true;
-            sendMessage(MessageType.MESSAGE_230);
-        }else {
-            disconnect(MessageType.MESSAGE_550);
-        }
-    }
-
-    private void eprtCmd(String message) throws IOException {
-        String[] req = message.split("\\|");
-        int port = Integer.parseInt(req[req.length-1]);
-        String addr = req[req.length-2];
-        sendMessage(MessageType.MESSAGE_229.replace("port", req[req.length-1]));
-        this.socketPassif = new Socket(addr, port);
-    }
-
-    private void disconnect(String reason) throws IOException {
+    public void disconnect(String reason) throws IOException {
         sendMessage(reason);
         this.socket.close();
         this.inProcess = false;
         System.out.println("Un client s'est deconnecté");
     }
 
-    private void sendMessage(String message) throws IOException {
+    public void sendMessage(String message) throws IOException {
         out.write(message.getBytes());
         out.flush();
     }
@@ -132,5 +109,4 @@ public class Session implements Runnable {
         System.out.println(message);
         return message;
     }
-
 }

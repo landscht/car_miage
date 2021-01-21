@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class UserConstant {
 
-    private final String username = "admin";
-    private final String password = "admin";
+    public static final String username = "admin";
+    public static final String password = "admin";
 
     public boolean goodUsername(String username) {
         return username.equals(this.username);
