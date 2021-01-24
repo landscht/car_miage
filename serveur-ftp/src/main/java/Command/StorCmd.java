@@ -14,7 +14,7 @@ public class StorCmd extends Command {
 
         InputStream dtpInputStream = this.session.getSocketPassif().getInputStream();
         String[] req = this.req.split(" ");
-        File file = new File(req[1]);
+        File file = new File(this.session.getDirectory() + "/" + req[1]);
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
 

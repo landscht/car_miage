@@ -34,7 +34,15 @@ public class Session implements Runnable {
          */
     private final Socket socket;
 
-    private String directory = "/";
+    public String getDirectory() {
+        return directory;
+    }
+
+    public void setDirectory(String directory) {
+        this.directory = directory;
+    }
+
+    private String directory = ".";
 
     private final ServerSocket serverSocketPassif;
 

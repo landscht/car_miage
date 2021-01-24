@@ -13,6 +13,11 @@ public abstract class Command {
         exec();
     }
 
+    protected String getDirectoryName(){
+        String[] commands = this.req.split(" ");
+        return commands.length > 1 ? this.session.getDirectory() + "/" + commands[1] : this.session.getDirectory();
+    }
+
     abstract void exec() throws Exception;
 
 }
