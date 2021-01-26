@@ -5,17 +5,14 @@ import main.java.message.MessageType;
 import java.io.DataOutputStream;
 import java.io.File;
 
-public class ListCmd extends Command {
+public class ListCmd extends CommandTransfert {
 
     @Override
-    void exec() throws Exception {
-        this.session.sendMessage(MessageType.MESSAGE_125);
+    void execTransfert() throws Exception {
         DataOutputStream dtpDataOutputStream = new DataOutputStream(this.session.getSocketPassif().getOutputStream());
         String dir = this.getDirectoryName();
         dtpDataOutputStream.write(createList(dir).getBytes());
         dtpDataOutputStream.flush();
-        this.session.sendMessage(MessageType.MESSAGE_226);
-        this.session.getSocketPassif().close();
     }
 
     private String createList(final String dir) {

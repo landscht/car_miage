@@ -6,29 +6,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-public class StorCmd extends Command {
+public class StorCmd extends CommandTransfert {
 
     @Override
-    void exec() throws Exception {
-        this.session.sendMessage(MessageType.MESSAGE_125);
-
+    void execTransfert() throws Exception {
         InputStream dtpInputStream = this.session.getSocketPassif().getInputStream();
         String[] req = this.req.split(" ");
-        File file = new File(this.session.getDirectory() + "/" + req[1]);
-
+        String str = req.length > 2 ? this.session.getDirectory() + "/" + req[2] : this.session.getDirectory() + "/" + req[1];
+        File file = new File(str);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
-
         byte[] buffer = new byte[this.session.getSocket().getReceiveBufferSize()];
         int bytesRead = 0;
-
         while ((bytesRead = dtpInputStream.read(buffer)) != -1) {
             fileOutputStream.write(buffer, 0, bytesRead);
         }
-
         fileOutputStream.close();
         fileOutputStream.flush();
-        this.session.getSocketPassif().close();
-        this.session.sendMessage(MessageType.MESSAGE_226);
     }
 
 }
