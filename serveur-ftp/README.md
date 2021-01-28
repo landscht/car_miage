@@ -5,6 +5,7 @@
 `git clone https://github.com/landscht/car_miage`
 - Lancer la classe **Application.java** qui se trouve à la racine du TP
 - Se connecter au serveur à l'aide d'un terminal ou d'un client FTP en désactivant le mode *Anonymous* `ftp localhost 20`
+- Les identifiants sont `admin admin`
 
 ## Étendre les commandes
 ### La solution

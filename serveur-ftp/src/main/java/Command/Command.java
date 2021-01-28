@@ -14,8 +14,13 @@ public abstract class Command {
     }
 
     protected String getDirectoryName(){
-        String[] commands = this.req.split(" ");
-        return commands.length > 1 ? this.session.getDirectory() + "/" + commands[1] : this.session.getDirectory();
+        String[] args = this.req.split(" ");
+        return args.length > 1 ? this.session.getDirectory() + "/" + args[1] : this.session.getDirectory();
+    }
+
+    protected String getDirectoryNameTwoArgs() {
+        String[] args = this.req.split(" ");
+        return args.length > 2 ? this.session.getDirectory() + "/" + args[2] : this.session.getDirectory() + "/" + args[1];
     }
 
     abstract void exec() throws Exception;

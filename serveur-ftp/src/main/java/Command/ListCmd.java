@@ -16,7 +16,7 @@ public class ListCmd extends CommandTransfert {
     }
 
     private String createList(final String dir) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         final File folder = new File(dir);
         if (!folder.exists() || !folder.isDirectory()) {
             return "Directory does not exist";
@@ -24,9 +24,13 @@ public class ListCmd extends CommandTransfert {
         final File[] files = folder.listFiles();
         for (int i = 0; i < files.length; i++) {
             final File file = files[i];
-            result += file.getName()+"\r\n";
+            if (file.isDirectory()) {
+                result.append("d ").append(file.getName()).append("\r\n");
+            }else {
+                result.append(file.getName()).append("\r\n");
+            }
         }
-        return result;
+        return result.toString();
     }
 
 }

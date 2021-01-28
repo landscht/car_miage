@@ -11,9 +11,7 @@ public class StorCmd extends CommandTransfert {
     @Override
     void execTransfert() throws Exception {
         InputStream dtpInputStream = this.session.getSocketPassif().getInputStream();
-        String[] req = this.req.split(" ");
-        String str = req.length > 2 ? this.session.getDirectory() + "/" + req[2] : this.session.getDirectory() + "/" + req[1];
-        File file = new File(str);
+        File file = new File(getDirectoryNameTwoArgs());
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         byte[] buffer = new byte[this.session.getSocket().getReceiveBufferSize()];
         int bytesRead = 0;
