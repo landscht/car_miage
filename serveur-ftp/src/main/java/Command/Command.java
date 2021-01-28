@@ -15,6 +15,9 @@ public abstract class Command {
 
     protected String getDirectoryName(){
         String[] args = this.req.split(" ");
+        if (args.length > 1 && args[1].charAt(0) == '/') {
+            return args[1];
+        }
         return args.length > 1 ? this.session.getDirectory() + "/" + args[1] : this.session.getDirectory();
     }
 
