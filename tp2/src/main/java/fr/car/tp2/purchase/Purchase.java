@@ -1,5 +1,6 @@
 package fr.car.tp2.purchase;
 
+import fr.car.tp2.product.Product;
 import lombok.Data;
 
 import javax.persistence.*;
