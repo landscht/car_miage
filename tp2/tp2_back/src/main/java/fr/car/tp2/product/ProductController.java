@@ -12,11 +12,13 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping
+    @CrossOrigin
+    @GetMapping("/inStock")
     public List<Product> getAllProductInStock(@RequestParam int page){
         return productService.getAllProductInStockByPage(page);
     }
 
+    @CrossOrigin
     @GetMapping
     public List<Product> getAllProduct(@RequestParam int page){
         return productService.getAllProductByPage(page);

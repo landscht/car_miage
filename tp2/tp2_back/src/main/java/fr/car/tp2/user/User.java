@@ -3,14 +3,12 @@ package fr.car.tp2.user;
 import fr.car.tp2.command.Command;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@Table(name = "users")
 public class User {
 
     @Id
