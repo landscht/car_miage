@@ -1,14 +1,19 @@
 <template>
-  <ProductScreen></ProductScreen>
+  <v-app>
+    <div>
+      <Header></Header>
+      <router-view/>
+    </div>
+  </v-app>
 </template>
 
 <script>
 
-import ProductScreen from "@/screens/ProductScreen";
+import Header from "@/components/Header";
 export default {
   name: 'App',
   components: {
-    ProductScreen
+    Header
   }
 }
 </script>
