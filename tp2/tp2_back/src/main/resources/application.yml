@@ -14,3 +14,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+
+app:
+  secret: tp2Secret
+  token-validity-in-seconds: 3600

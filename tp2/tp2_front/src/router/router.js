@@ -2,12 +2,19 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProductScreen from "@/screens/ProductScreen";
 import HomeScreen from "@/screens/HomeScreen";
+import SigninScreen from "@/screens/SigninScreen";
+import SignupScreen from "@/screens/SignupScreen";
 import BasketScreen from "@/screens/BasketScreen";
+
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
+        redirect: '/signin',
+    },
+    {
+        path: '/home',
         name: 'home',
         component: HomeScreen
     },
@@ -17,6 +24,15 @@ const routes = [
         component: ProductScreen
     },
     {
+        path: '/signin',
+        name: 'signin',
+        component: SigninScreen
+    },
+    {
+        path: '/signup',
+        name: 'signup',
+        component: SignupScreen
+    },
         path: '/basket',
         name: 'basket',
         component: BasketScreen
