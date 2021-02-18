@@ -10,6 +10,7 @@
             v-bind:key="product.id"
         >
           <ProductCard
+              :id="product.id"
               :name="product.name"
               :price="product.price"
               :description="product.description"
@@ -31,7 +32,7 @@ export default {
   },
   data() {
     return {
-        products : []
+      products: []
     }
   },
   methods: {

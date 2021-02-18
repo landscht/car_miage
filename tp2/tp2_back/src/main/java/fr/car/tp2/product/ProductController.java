@@ -24,9 +24,18 @@ public class ProductController {
         return productService.getAllProductByPage(page);
     }
 
+    @CrossOrigin
     @PostMapping
     public Product saveProduct(@RequestBody Product product){
         return productService.saveProduct(product);
     }
+
+    @CrossOrigin
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id){
+        return productService.getProductById(id);
+    }
+
+
 
 }

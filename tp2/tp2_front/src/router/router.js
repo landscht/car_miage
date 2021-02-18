@@ -4,6 +4,8 @@ import ProductScreen from "@/screens/ProductScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import SigninScreen from "@/screens/SigninScreen";
 import SignupScreen from "@/screens/SignupScreen";
+import BasketScreen from "@/screens/BasketScreen";
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -31,6 +33,10 @@ const routes = [
         name: 'signup',
         component: SignupScreen
     },
+        path: '/basket',
+        name: 'basket',
+        component: BasketScreen
+    }
 ]
 
 const router = new VueRouter({

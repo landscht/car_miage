@@ -2,7 +2,7 @@
   <div>
     <v-card
         class="mx-auto"
-        max-width="344"
+        width="344"
     >
       <v-card-title>{{name}} {{price}}€</v-card-title>
       <v-card-subtitle>{{description}}</v-card-subtitle>
@@ -10,50 +10,45 @@
         <v-btn
             color="orange lighten-2"
             text
-            @click="addToBasket(id)"
+            @click="removeFromBasket(id)"
         >
-          Ajouter au panier
+          Supprimer
         </v-btn>
       </v-card-actions>
     </v-card>
-    <Notifier :text="productAdded" :snackbar="snackbar"></Notifier>
+    <Notifier :text="productDeleted" :snackbar="snackbar"></Notifier>
   </div>
 </template>
 
 <script>
-import ProductService from "@/services/ProductService";
 import Notifier from "@/components/Notifier";
+
 export default {
-  name: "ProductCard",
+  name: "BasketProductCard",
   components: {Notifier},
   props: {
     name: String,
     price: Number,
     description: String,
     image: Object,
-    id: Number
+    id: Number,
   },
   data() {
     return {
-      productAdded: 'Le produit a bien été ajouté au panier.',
+      productDeleted: 'Le produit a bien été supprimé du panier.',
       snackbar: false
     }
   },
   methods : {
-    addToBasket(id){
-      this.getProduct(id).then(response => {
-        this.snackbar = true;
-        if(localStorage.getItem('user_basket')){
-          let basket = JSON.parse(localStorage.getItem('user_basket'));
-          basket.push(response.data);
+    removeFromBasket(id) {
+      this.snackbar = true;
+      let basket = JSON.parse(localStorage.getItem('user_basket'));
+      basket.forEach(function(item, index) {
+        if(item.id === id){
+          basket.splice(index,1);
           localStorage.setItem('user_basket',JSON.stringify(basket));
-        }else{
-          localStorage.setItem('user_basket',JSON.stringify([response.data]));
         }
       })
-    },
-    getProduct(id){
-      return ProductService.getProductById(id);
     }
   }
 }
