@@ -17,8 +17,6 @@ public class User {
 
     private String lastname;
     private String firstname;
-    private String email;
-    private String password;
 
     @OneToMany
     private List<Command> commands;
