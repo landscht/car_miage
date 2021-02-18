@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProductScreen from "@/screens/ProductScreen";
 import HomeScreen from "@/screens/HomeScreen";
+import CommandScreen from "@/screens/CommandScreen";
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
         path: '/products',
         name: 'products',
         component: ProductScreen
+    },
+    {
+        path: '/command',
+        name: 'command',
+        component: CommandScreen
     }
 ]
 
