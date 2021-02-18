@@ -7,5 +7,8 @@ export default {
     },
     getAllProductsInStock(page){
         return axios.get(`http://localhost:8081/product/inStock`,{params: { page : page}})
+    },
+    getProductById(id){
+        return axios.get(`http://localhost:8081/product/${id}`);
     }
 }
