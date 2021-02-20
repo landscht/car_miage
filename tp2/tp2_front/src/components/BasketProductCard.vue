@@ -4,13 +4,17 @@
         class="mx-auto"
         width="344"
     >
-      <v-card-title>{{name}} {{price}}€</v-card-title>
-      <v-card-subtitle>{{description}}</v-card-subtitle>
+      <v-card-title>{{purchase.product.name}} {{purchase.product.price}}€</v-card-title>
+      <v-card-subtitle>{{purchase.product.description}}</v-card-subtitle>
+      <v-card-text>
+        <label>Quantité : </label>
+        <input id="quantity" type="number"  :value="purchase.quantity" :min="purchase.quantity" style="width: 35px">
+      </v-card-text>
       <v-card-actions>
         <v-btn
             color="orange lighten-2"
             text
-            @click="removeFromBasket(id)"
+            @click="removeFromBasket(purchase.product.id)"
         >
           Supprimer
         </v-btn>
@@ -27,11 +31,7 @@ export default {
   name: "BasketProductCard",
   components: {Notifier},
   props: {
-    name: String,
-    price: Number,
-    description: String,
-    image: Object,
-    id: Number,
+    purchase: Object
   },
   data() {
     return {

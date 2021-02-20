@@ -13,7 +13,7 @@ public class PurchaseService {
         return this.purchaseRepository.save(purchase);
     }
 
-    public Purchase getPurchase(Long id) throws PurchaseNotFoundException {
+    public Purchase getPurchaseById(Long id) throws PurchaseNotFoundException {
         return this.purchaseRepository.findById(id).orElseThrow(() -> new PurchaseNotFoundException(id));
     }
 

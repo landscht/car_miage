@@ -1,8 +1,7 @@
 package fr.car.tp2.user;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -10,5 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+
+    @CrossOrigin
+    @PostMapping
+    public User saveUser(@RequestBody User user){
+        return userService.saveUser(user);
+    }
 
 }

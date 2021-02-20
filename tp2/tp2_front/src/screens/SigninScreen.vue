@@ -81,7 +81,19 @@ export default {
     ],
     formValid: false,
     viewMdp: false
-  })
+  }),
+  mounted() {
+    // je mets à la mano un user de ma bdd dans le local storage pour faire genre il s'est authent, le temps que tu finisses
+    /*localStorage.clear()
+    let user = {
+      id:5,
+      firstname: 'Gabriel',
+      lastname: 'Congin',
+      commands: []
+    }
+    localStorage.setItem('current_user', JSON.stringify(user));*/
+    console.log(localStorage.getItem('current_user'))
+  }
 }
 </script>
 

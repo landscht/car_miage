@@ -18,7 +18,7 @@ public class Command {
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Purchase> purchases;
 
 }

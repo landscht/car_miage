@@ -10,10 +10,7 @@
             v-bind:key="product.id"
         >
           <ProductCard
-              :id="product.id"
-              :name="product.name"
-              :price="product.price"
-              :description="product.description"
+              :product="product"
           ></ProductCard>
         </v-col>
       </v-row>

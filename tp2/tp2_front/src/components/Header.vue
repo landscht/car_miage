@@ -11,7 +11,7 @@
       <v-btn to="/products">
         Les produits
       </v-btn>
-      <v-btn>
+      <v-btn to="/commands">
         Mes commandes
       </v-btn>
       <v-btn to="/basket">
