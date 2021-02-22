@@ -6,6 +6,7 @@ import SigninScreen from "@/screens/SigninScreen";
 import SignupScreen from "@/screens/SignupScreen";
 import BasketScreen from "@/screens/BasketScreen";
 import CommandScreen from "@/screens/CommandScreen";
+import AuthService from "@/services/AuthService";
 
 Vue.use(VueRouter)
 
@@ -51,5 +52,18 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/signin', '/signup'];
+    console.log(to.path);
+    const authRequired = !publicPages.includes(to.path);
+
+    // trying to access a restricted page + not logged in
+    // redirect to login page
+    if (authRequired && !AuthService.isLoggin()) {
+        next('/signin');
+    } else {
+        next();}
+});
 
 export default router;

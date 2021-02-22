@@ -46,6 +46,7 @@
               :rules="pwdRules"
               :type="viewMdp ? 'text' : 'password'"
               label="Mot de passe"
+              ref="password"
               required
           >
             <v-icon
@@ -60,6 +61,7 @@
               v-model="confirmPassword"
               :rules="confirmRules"
               :type="viewMdp ? 'text' : 'password'"
+              validate
               label="Confirmation"
               required
           ></v-text-field>
@@ -69,6 +71,7 @@
       <v-card-actions>
         <v-btn
             color="orange"
+            @click="signup"
             outlined
         >
           S'inscrire
@@ -87,6 +90,8 @@
 </template>
 
 <script>
+import AuthService from "@/services/AuthService";
+
 export default {
   name: "SignupScreen",
   data: () => ({
@@ -113,11 +118,22 @@ export default {
     ],
     confirmRules: [
       v => !!v || 'Veuillez confirmer votre mot de passe',
-      v => v !== this.auth.password || 'Les mots de pase ne correspondent pas'
     ],
     formValid: false,
     viewMdp: false
-  })
+  }),
+  methods: {
+    signup() {
+      if (this.$refs.form.validate()) {
+        AuthService.register(this.auth).then(() => {
+          this.$router.push('/signin');
+        })
+            .catch(() => {
+              console.log("erreur");
+            });
+      }
+    }
+  },
 }
 </script>
 

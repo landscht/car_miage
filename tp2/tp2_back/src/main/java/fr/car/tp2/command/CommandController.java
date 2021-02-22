@@ -10,6 +10,7 @@ public class CommandController {
 
     private final CommandService commandService;
 
+    @CrossOrigin
     @PostMapping
     public Command saveCommand(@RequestBody Command command){
         return commandService.saveCommand(command);

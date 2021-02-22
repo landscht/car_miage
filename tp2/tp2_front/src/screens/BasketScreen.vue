@@ -19,9 +19,11 @@
 </template>
 
 <script>
+
 import BasketProductCard from "@/components/BasketProductCard";
 import Notifier from "@/components/Notifier";
-import UserService from "@/services/UserService";
+import CommandService from "@/services/CommandService";
+
 export default {
   name: "BasketScreen",
   components: {BasketProductCard, Notifier},
@@ -41,11 +43,15 @@ export default {
       console.log(this.basket);
     },
     createCommand(){
-      let user = JSON.parse(localStorage.getItem('current_user'));
-      user.commands.push(this.basket);
+      let user = JSON.parse(localStorage.getItem('user'));
+      const command = {
+        user: user,
+        purchases: this.basket.purchases
+      }
+      console.log(command);
       this.snackbar = true
-      UserService.saveUser(user).then(response => {
-        localStorage.setItem('current_user', JSON.stringify(response.data));
+      CommandService.saveCommand(command).then(data => {
+        console.log(data);
         localStorage.removeItem('user_basket');
       })
     }

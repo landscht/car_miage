@@ -48,6 +48,7 @@
         <v-btn
             :disabled="!formValid"
             color="orange"
+            @click="login"
             outlined
         >
           Se connecter
@@ -66,6 +67,10 @@
 </template>
 
 <script>
+
+import AuthService from "@/services/AuthService";
+import UserService from "@/services/UserService";
+
 export default {
   name: "SigninScreen",
   data: () => ({
@@ -82,6 +87,21 @@ export default {
     formValid: false,
     viewMdp: false
   }),
+  methods: {
+    login() {
+      if (this.$refs.form.validate()) {
+        AuthService.login(this.auth).then(response => {
+          console.log(response);
+          if (response.data) {
+            localStorage.setItem('access_token', JSON.stringify(response.data));
+            this.$router.push('/home');
+          }
+        }).finally(() => {
+          UserService.loadUser();
+        });
+      }
+    }
+  },
   mounted() {
     // je mets à la mano un user de ma bdd dans le local storage pour faire genre il s'est authent, le temps que tu finisses
     /*localStorage.clear()
