@@ -17,7 +17,7 @@
       <v-btn to="/basket">
         Mon panier <v-icon style="padding-left: 10px">mdi-basket</v-icon>
       </v-btn>
-      <v-btn>
+      <v-btn @click="logout">
         Me déconnecter
       </v-btn>
     </v-app-bar>
@@ -26,13 +26,18 @@
 
 <script>
 import router from "@/router/router";
+import AuthService from "@/services/AuthService";
+
 export default {
   name: "Header",
   methods: {
     goToHomeScreen(){
       router.push('/')
+    },
+    logout() {
+      AuthService.logout();
     }
-  }
+  },
 }
 </script>
 
