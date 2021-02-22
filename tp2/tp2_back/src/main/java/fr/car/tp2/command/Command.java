@@ -21,4 +21,6 @@ public class Command {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Purchase> purchases;
 
+    private Long date;
+
 }
