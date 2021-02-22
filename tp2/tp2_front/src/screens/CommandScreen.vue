@@ -1,31 +1,62 @@
 <template>
-  <div>
-    <h1>Commandes :</h1>
-    <div
-        v-for="command in commands"
-        v-bind:key="command.id"
+  <div style="padding-top: 50px" align="center">
+    <h1>Vos commandes</h1>
+    <v-data-table
+        no-results-text="Vous n'avez aucune commande"
+        :headers="headers"
+        :items="commands"
+        no-data-text="Vous n'avez aucune commande"
+        :items-per-page="10"
+        class="elevation-1"
     >
-      <Command :command="command"></Command>
-    </div>
+      <template v-slot:item.date="{item}">
+        {{getFullDate(item.date)}}
+      </template>
+      <template v-slot:item.nbArticles="{item}">
+        {{getNbArticles(item)}}
+      </template>
+      <template v-slot:item.price="{item}">
+        {{getPrice(item)}}€
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
-import Command from "@/components/Command";
+
+import CommandService from "@/services/CommandService";
+import DateService from "@/services/DateService";
+
 export default {
   name: "CommandScreen",
-  components: {Command},
   mounted() {
-    this.getCommands();
+    this.getAllCommand(0);
   },
-  data() {
-    return {
-      commands: []
-    }
-  },
+  data: () => ({
+    headers: [
+      { text: 'Numéro de commande', value: 'id'},
+      { text: 'Date', value: 'date'},
+      { text: 'Nombre d\'articles', value: 'nbArticles' },
+      { text: 'Prix', value: 'price' }
+    ],
+    commands: []
+  }),
   methods: {
-    getCommands(){
-      this.commands = JSON.parse(localStorage.getItem('current_user')).commands;
+    getFullDate(timestamp) {
+      return DateService.getFullDate(timestamp);
+    },
+    getNbArticles(command) {
+      return command.purchases.reduce((a, b) => a + b.quantity, 0);
+    },
+    getPrice(command) {
+      console.log(command.purchases)
+      return command.purchases.reduce((a, b) => a + (b.product.price * b.quantity), 0);
+    },
+    getAllCommand(page) {
+      CommandService.getAllCommand(page).then((data) => {
+        console.log(data.data);
+        this.commands = data.data;
+      })
     }
   }
 }

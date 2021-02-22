@@ -1,7 +1,10 @@
 package fr.car.tp2.command;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -12,8 +15,14 @@ public class CommandController {
 
     @CrossOrigin
     @PostMapping
-    public Command saveCommand(@RequestBody Command command){
-        return commandService.saveCommand(command);
+    public ResponseEntity<Command> saveCommand(@RequestBody Command command){
+        return ResponseEntity.ok(commandService.saveCommand(command));
+    }
+
+    @CrossOrigin
+    @GetMapping
+    public ResponseEntity<List<Command>> getAllCommand(@RequestParam int page) {
+        return ResponseEntity.ok(commandService.getAllCommandByPage(page));
     }
 
 }
