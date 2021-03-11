@@ -1,5 +1,7 @@
 package fr.car.tp2.command;
 
+import fr.car.tp2.product.ProductService;
+import fr.car.tp2.purchase.Purchase;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 public class CommandService {
     private final CommandRepository commandRepository;
+    private final ProductService productService;
 
     public Command saveCommand(Command command){
         command.setDate(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+        for(Purchase purchase : command.getPurchases()){
+            productService.actualizeStock(purchase.getProduct().getId(), purchase.getQuantity());
+        }
         return commandRepository.save(command);
     }
 
