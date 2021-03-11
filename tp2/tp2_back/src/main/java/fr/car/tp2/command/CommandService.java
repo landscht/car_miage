@@ -18,6 +18,10 @@ public class CommandService {
         return commandRepository.save(command);
     }
 
+    public List<Command> getAllCommandByUser(Long userId) {
+        return commandRepository.findAllByUserId(userId);
+    }
+
     public List<Command> getAllCommandByPage(int page) {
         Pageable pageable = PageRequest.of(page, 10);
         return commandRepository.findAll(pageable);

@@ -9,5 +9,7 @@ import java.util.List;
 public interface CommandRepository extends CrudRepository<Command,Long> {
 
     List<Command> findAll(Pageable p);
+    List<Command> findAllByUserId(Long userId);
+
 
 }

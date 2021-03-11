@@ -16,6 +16,12 @@ export default {
             },
             headers: authHeader()
         });
+    },
+
+    getAllCommandByUser() {
+        return axios.get("http://localhost:8081/command/user", {
+            headers: authHeader()
+        });
     }
 
 }

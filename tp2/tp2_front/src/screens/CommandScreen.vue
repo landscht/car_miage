@@ -60,8 +60,8 @@ export default {
       console.log(command.purchases)
       return command.purchases.reduce((a, b) => a + (b.product.price * b.quantity), 0);
     },
-    getAllCommand(page) {
-      CommandService.getAllCommand(page).then((data) => {
+    getAllCommand() {
+      CommandService.getAllCommandByUser().then((data) => {
         console.log(data.data);
         this.commands = data.data;
       })
