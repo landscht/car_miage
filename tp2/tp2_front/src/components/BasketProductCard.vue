@@ -8,7 +8,7 @@
       <v-card-subtitle>{{purchase.product.description}}</v-card-subtitle>
       <v-card-text>
         <label>Quantité : </label>
-        <v-text-field name="quantityBasket" type="number"  :value="purchase.quantity" min="1" style="width: 35px"></v-text-field>
+        <v-text-field name="quantityBasket" type="number"  v-model="purchase.quantity" min="1" style="width: 35px"></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn

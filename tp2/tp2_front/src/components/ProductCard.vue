@@ -8,8 +8,7 @@
       <v-card-subtitle>{{product.description}}</v-card-subtitle>
       <v-card-text>
         <label>Quantité : </label>
-        <v-text-field name="quantity" :v-model="quantity" type="number"  value="1" min="1" style="width: 35px"></v-text-field>
-        {{quantity}}
+        <v-text-field name="quantity" v-model="quantity" type="number"  value="1" min="1" style="width: 35px"></v-text-field>
         <p v-if="outOfStock" style="color: red; padding-top: 15px">Le produit n'est plus en stock</p>
         <p v-else style="padding-top: 15px"><br/></p>
       </v-card-text>
