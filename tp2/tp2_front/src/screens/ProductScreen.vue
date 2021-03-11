@@ -11,6 +11,7 @@
         >
           <ProductCard
               :product="product"
+              :outOfStock="product.stock <= 0"
           ></ProductCard>
         </v-col>
       </v-row>

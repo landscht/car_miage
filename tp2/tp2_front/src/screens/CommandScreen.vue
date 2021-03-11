@@ -7,6 +7,7 @@
         :items="commands"
         no-data-text="Vous n'avez aucune commande"
         :items-per-page="10"
+        show-expand
         class="elevation-1"
     >
       <template v-slot:item.date="{item}">
@@ -17,6 +18,13 @@
       </template>
       <template v-slot:item.price="{item}">
         {{getPrice(item)}}€
+      </template>
+      <template v-slot:expanded-item="{ headers, item }">
+        <div v-for="purchase in item.purchases" v-bind:key="purchase.id" style="width: 100%">
+          <p>
+            {{purchase.product.name}} x {{purchase.quantity}}
+          </p>
+        </div>
       </template>
     </v-data-table>
   </div>

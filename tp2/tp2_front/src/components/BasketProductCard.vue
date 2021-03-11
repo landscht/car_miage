@@ -8,7 +8,7 @@
       <v-card-subtitle>{{purchase.product.description}}</v-card-subtitle>
       <v-card-text>
         <label>Quantité : </label>
-        <input id="quantity" type="number"  :value="purchase.quantity" :min="purchase.quantity" style="width: 35px">
+        <v-text-field name="quantityBasket" type="number"  :value="purchase.quantity" min="1" style="width: 35px"></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn
@@ -43,9 +43,10 @@ export default {
     removeFromBasket(id) {
       this.snackbar = true;
       let basket = JSON.parse(localStorage.getItem('user_basket'));
-      basket.forEach(function(item, index) {
-        if(item.id === id){
-          basket.splice(index,1);
+      console.log(basket)
+      basket.purchases.forEach(function(item, index) {
+        if(item.product.id === id){
+          basket.purchases.splice(index,1);
           localStorage.setItem('user_basket',JSON.stringify(basket));
         }
       })
