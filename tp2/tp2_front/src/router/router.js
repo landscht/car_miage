@@ -13,7 +13,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect: '/signin',
+        redirect: '/home',
     },
     {
         path: '/home',
@@ -62,8 +62,9 @@ router.beforeEach((to, from, next) => {
     // redirect to login page
     if (authRequired && !AuthService.isLoggin()) {
         next('/signin');
-    } else {
-        next();}
+    } else{
+        next();
+    }
 });
 
 export default router;

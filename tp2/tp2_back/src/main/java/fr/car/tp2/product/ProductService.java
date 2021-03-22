@@ -25,6 +25,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public Product actualizeStock(Long id, int nbProducts){
+        Product product = productRepository.findById(id).get();
+        product.setStock(product.getStock() - nbProducts);
+        return productRepository.save(product);
+    }
+
     public Product getProductById(Long id){
         return productRepository.findById(id).get();
     }

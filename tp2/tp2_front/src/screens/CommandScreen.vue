@@ -17,7 +17,7 @@
         {{getNbArticles(item)}}
       </template>
       <template v-slot:item.price="{item}">
-        {{getPrice(item)}}€
+        {{getPrice(item).toFixed(2)}}€
       </template>
       <template v-slot:expanded-item="{ headers, item }">
         <div v-for="purchase in item.purchases" v-bind:key="purchase.id" style="width: 100%">

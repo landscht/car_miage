@@ -49,11 +49,18 @@ export default {
         product : product,
         quantity : this.quantity
       }
-      console.log(purchase)
+      let alreadyPresent = false;
       this.snackbar = true;
       if (localStorage.getItem('user_basket')) {
         let basket = JSON.parse(localStorage.getItem('user_basket'));
-        basket.purchases.push(purchase);
+        basket.purchases.forEach(function(item) {
+          if(item.product.id == product.id){
+            item.quantity = parseInt(item.quantity) + parseInt(purchase.quantity)
+            alreadyPresent = true
+          }
+        })
+        if(!alreadyPresent)
+          basket.purchases.push(purchase);
         localStorage.setItem('user_basket', JSON.stringify(basket));
       } else {
         const basket = {
