@@ -30,7 +30,7 @@ public class App {
 
         ActorRef master = actorSystem.actorOf(Props.create(Master.class, mappers));
 
-        master.tell("test.txt", ActorRef.noSender());
+        master.tell("test-perso.txt", ActorRef.noSender());
     }
 
 }
