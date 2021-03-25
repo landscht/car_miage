@@ -15,7 +15,7 @@ public class Reducer extends UntypedActor {
     }
 
     @Override
-    public void onReceive(Object message) throws Throwable {
+    public void onReceive(Object message) {
         if (message instanceof String) {
             String word = (String) message;
             if (countWord.containsKey(word)) {

@@ -1,22 +1,21 @@
 package com.car.akka.actor;
 
 import akka.actor.ActorRef;
+import akka.actor.ActorSelection;
 import akka.actor.UntypedActor;
 import com.car.akka.App;
 
 import java.io.*;
-import java.util.List;
 
 public class Master extends UntypedActor {
 
-    List<ActorRef> mappers;
+    private final String URL_MAPPER = "akka.tcp://app2@127.0.0.1:3004/user/mapper";
 
-    public Master(List<ActorRef> mappers) {
-        this.mappers = mappers;
+    public Master() {
     }
 
     @Override
-    public void onReceive(Object message) throws Throwable {
+    public void onReceive(Object message) throws IOException {
         System.out.println(message);
         if (message instanceof String) {
             File file = new File((String) message);
@@ -31,7 +30,9 @@ public class Master extends UntypedActor {
         String line;
         int nbLine = 0;
         while ((line = lecteurAvecBuffer.readLine()) != null) {
-            mappers.get(nbLine % App.NB_MAPPER).tell(line, ActorRef.noSender());
+            int index = nbLine % App.NB_MAPPER;
+            ActorSelection mapper = getContext().actorSelection(URL_MAPPER + index);
+            mapper.tell(line, ActorRef.noSender());
             nbLine++;
         }
     }

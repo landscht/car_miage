@@ -17,7 +17,7 @@ public class Mapper extends UntypedActor {
     }
 
     @Override
-    public void onReceive(Object message) throws Throwable {
+    public void onReceive(Object message) {
         if (message instanceof String) {
             readLine((String) message);
         }else {
